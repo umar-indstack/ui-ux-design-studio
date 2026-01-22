@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DesignCraft | UI/UX Design Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Work Sans',sans-serif; background:#fafafa; color:#2c2c2c; line-height:1.7; }
+
+header { background:rgba(250,250,250,0.95); backdrop-filter:blur(10px); color:#2c2c2c; position:fixed; top:0; left:0; right:0; z-index:1000; padding:30px 0; border-bottom:1px solid #e8e8e8; }
+.header-main { max-width:1600px; margin:0 auto; padding:0 60px; display:flex; align-items:center; justify-content:space-between; }
+.logo { font-family:'Playfair Display',serif; font-size:28px; color:#8b5cf6; font-weight:700; }
+.nav-links { list-style:none; display:flex; gap:50px; }
+.nav-links a { color:#666; text-decoration:none; font-weight:500; font-size:15px; transition:color .3s; }
+.nav-links a:hover { color:#8b5cf6; }
+.btn-primary { padding:14px 32px; background:#8b5cf6; color:white; border:none; border-radius:0; font-weight:600; cursor:pointer; text-decoration:none; transition:.3s; display:inline-block; font-size:14px; }
+.btn-primary:hover { background:#7c3aed; }
+.mobile-menu-toggle { display:none; flex-direction:column; gap:5px; background:transparent; border:none; cursor:pointer; padding:5px; }
+.mobile-menu-toggle span { width:26px; height:2px; background:#2c2c2c; transition:.3s; }
+
+.hero { min-height:90vh; display:flex; align-items:center; padding:150px 60px 100px; background:#fafafa; }
+.hero-container { max-width:1600px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.2fr 0.8fr; gap:100px; align-items:center; }
+.hero-left { }
+.hero-tag { display:inline-block; padding:6px 14px; background:#f3f4f6; color:#8b5cf6; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:40px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:96px; font-weight:700; line-height:1.1; margin-bottom:40px; color:#1a1a1a; }
+.hero p { font-size:22px; color:#666; margin-bottom:50px; font-weight:300; max-width:500px; }
+.hero-right { position:relative; }
+.hero-image { width:100%; height:600px; background:linear-gradient(135deg,#8b5cf6,#ec4899); position:relative; background-size:cover; background-position:center; }
+.hero-image::before { content:''; position:absolute; inset:20px; border:2px solid white; }
+.hero-image img { width:100%; height:100%; object-fit:cover; }
+
+.services { background:white; padding:150px 60px; }
+.services-header { max-width:1600px; margin:0 auto 100px; }
+.services-header h2 { font-family:'Playfair Display',serif; font-size:72px; color:#1a1a1a; margin-bottom:30px; }
+.services-header p { font-size:20px; color:#666; max-width:600px; }
+.services-grid { max-width:1600px; margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); gap:60px; }
+.service-card { padding:0; }
+.service-card-left { display:grid; grid-template-columns:80px 1fr; gap:40px; align-items:start; }
+.service-number { font-family:'Playfair Display',serif; font-size:120px; color:#f3f4f6; line-height:1; font-weight:700; }
+.service-content { }
+.service-image { width:100%; height:250px; background-size:cover; background-position:center; border-radius:8px; margin-bottom:30px; }
+.service-icon { font-size:56px; margin-bottom:30px; }
+.service-card h3 { font-size:36px; font-weight:600; margin-bottom:20px; color:#1a1a1a; }
+.service-card p { color:#666; line-height:1.8; margin-bottom:30px; font-size:17px; }
+.service-features { list-style:none; }
+.service-features li { color:#666; margin-bottom:15px; font-size:16px; padding-left:25px; position:relative; }
+.service-features li::before { content:'—'; position:absolute; left:0; color:#8b5cf6; }
+
+.stats-minimal { background:#fafafa; padding:120px 60px; }
+.stats-grid { max-width:1600px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:80px; }
+.stat { text-align:center; }
+.stat-number { font-family:'Playfair Display',serif; font-size:96px; color:#8b5cf6; line-height:1; margin-bottom:20px; }
+.stat-label { font-size:16px; color:#666; text-transform:uppercase; letter-spacing:2px; }
+
+.portfolio { background:white; padding:150px 60px; }
+.portfolio-header { max-width:1600px; margin:0 auto 100px; }
+.portfolio-header h2 { font-family:'Playfair Display',serif; font-size:72px; color:#1a1a1a; margin-bottom:30px; }
+.portfolio-grid { max-width:1600px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+.portfolio-item { position:relative; padding-bottom:80%; background:#f3f4f6; overflow:hidden; }
+.portfolio-item img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+.portfolio-overlay { position:absolute; inset:0; background:rgba(139,92,246,0.9); display:flex; flex-direction:column; justify-content:center; align-items:center; padding:40px; opacity:0; transition:opacity .3s; }
+.portfolio-item:hover .portfolio-overlay { opacity:1; }
+.portfolio-overlay h3 { font-size:28px; font-weight:600; color:white; margin-bottom:15px; }
+.portfolio-overlay p { color:rgba(255,255,255,0.9); font-size:16px; }
+
+.process { background:#fafafa; padding:150px 60px; }
+.process-header { max-width:1600px; margin:0 auto 100px; }
+.process-header h2 { font-family:'Playfair Display',serif; font-size:72px; color:#1a1a1a; margin-bottom:30px; }
+.process-timeline { max-width:1200px; margin:0 auto; position:relative; }
+.process-timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:#e8e8e8; }
+.process-step { display:flex; gap:60px; margin-bottom:80px; position:relative; }
+.process-step::before { content:''; position:absolute; left:-6px; top:0; width:12px; height:12px; background:#8b5cf6; border-radius:50%; }
+.step-content { flex:1; }
+.step-number { font-family:'Playfair Display',serif; font-size:18px; color:#8b5cf6; font-weight:700; margin-bottom:15px; }
+.step-content h3 { font-size:32px; font-weight:600; margin-bottom:15px; color:#1a1a1a; }
+.step-content p { color:#666; line-height:1.8; font-size:17px; }
+
+.testimonials { background:white; padding:150px 60px; }
+.testimonials-header { max-width:1600px; margin:0 auto 100px; }
+.testimonials-header h2 { font-family:'Playfair Display',serif; font-size:72px; color:#1a1a1a; margin-bottom:30px; }
+.testimonials-grid { max-width:1600px; margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); gap:60px; }
+.testimonial-card { padding:60px; background:#fafafa; }
+.testimonial-quote { font-family:'Playfair Display',serif; font-size:64px; color:#8b5cf6; line-height:1; margin-bottom:30px; }
+.testimonial-text { font-size:20px; color:#2c2c2c; line-height:1.8; margin-bottom:40px; font-style:italic; }
+.testimonial-author { display:flex; align-items:center; gap:20px; }
+.author-avatar { width:60px; height:60px; border-radius:50%; background-size:cover; background-position:center; }
+.author-info h4 { font-size:18px; font-weight:600; margin-bottom:5px; color:#1a1a1a; }
+.author-info p { color:#666; font-size:15px; }
+
+.cta { background:#8b5cf6; padding:150px 60px; text-align:center; }
+.cta h2 { font-family:'Playfair Display',serif; font-size:96px; color:white; margin-bottom:40px; }
+.cta p { font-size:24px; color:rgba(255,255,255,0.9); margin-bottom:50px; }
+
+footer { background:#1a1a1a; color:#999; padding:100px 60px 50px; }
+.footer-content { max-width:1600px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:80px; margin-bottom:80px; }
+.footer-section h4 { font-family:'Playfair Display',serif; font-size:24px; color:#8b5cf6; margin-bottom:30px; }
+.footer-section p, .footer-section a { color:#999; text-decoration:none; display:block; margin:15px 0; transition:color .3s; font-size:15px; }
+.footer-section a:hover { color:#8b5cf6; }
+.footer-bottom { text-align:center; padding-top:50px; border-top:1px solid #333; color:#666; font-size:14px; }
+
+@media (max-width:1200px){
+  .hero h1 { font-size:72px; }
+  .services-grid { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:768px){
+  .nav-links { position:fixed; top:90px; left:-100%; width:100%; background:white; flex-direction:column; padding:40px; gap:25px; transition:left .3s; box-shadow:0 4px 20px rgba(0,0,0,0.1); }
+  .nav-links.active{ left:0; }
+  .mobile-menu-toggle{ display:flex; }
+  .hero-container { grid-template-columns:1fr; }
+  .hero h1 { font-size:48px; }
+  .services-header h2, .portfolio-header h2, .process-header h2, .testimonials-header h2 { font-size:48px; }
+  .testimonials-grid, .portfolio-grid { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:1fr; }
+  .footer-content { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-main">
+    <div class="logo">DesignCraft</div>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="btn-primary" href="#contact">Get Started</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-left">
+      <span class="hero-tag">UI/UX Design Studio</span>
+      <h1>Design That<br>Delights<br>Users</h1>
+      <p>We create beautiful, intuitive user experiences that drive engagement and conversions. UI/UX design that makes a difference.</p>
+      <a class="btn-primary" href="#contact">Start Your Project</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image" style="background-image:url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80');">
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="UI/UX Design">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-header">
+    <h2>Our Services</h2>
+    <p>Comprehensive UI/UX design solutions</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-card-left">
+        <div class="service-number">01</div>
+        <div class="service-content">
+          <div class="service-image" style="background-image:url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80');"></div>
+          <div class="service-icon">🖥️</div>
+          <h3>UI Design</h3>
+          <p>Beautiful, modern interfaces that engage users and enhance brand identity.</p>
+          <ul class="service-features">
+            <li>Visual design</li>
+            <li>Design systems</li>
+            <li>Component libraries</li>
+            <li>Style guides</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-left">
+        <div class="service-number">02</div>
+        <div class="service-content">
+          <div class="service-image" style="background-image:url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80');"></div>
+          <div class="service-icon">📱</div>
+          <h3>UX Design</h3>
+          <p>User-centered design that creates intuitive and delightful experiences.</p>
+          <ul class="service-features">
+            <li>User research</li>
+            <li>Information architecture</li>
+            <li>User flows & wireframes</li>
+            <li>Usability testing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-left">
+        <div class="service-number">03</div>
+        <div class="service-content">
+          <div class="service-image" style="background-image:url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80');"></div>
+          <div class="service-icon">🎨</div>
+          <h3>Brand Identity</h3>
+          <p>Create a cohesive brand identity that resonates with your audience.</p>
+          <ul class="service-features">
+            <li>Logo design</li>
+            <li>Brand guidelines</li>
+            <li>Color palettes</li>
+            <li>Typography systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-left">
+        <div class="service-number">04</div>
+        <div class="service-content">
+          <div class="service-image" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80');"></div>
+          <div class="service-icon">🚀</div>
+          <h3>Prototyping</h3>
+          <p>Interactive prototypes to test and validate design concepts before development.</p>
+          <ul class="service-features">
+            <li>Interactive prototypes</li>
+            <li>User testing</li>
+            <li>Design iterations</li>
+            <li>Developer handoff</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-minimal">
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-number">300+</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">150+</div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">50%</div>
+      <div class="stat-label">Conversion Increase</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header">
+    <h2>Our Portfolio</h2>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="E-commerce Platform">
+      <div class="portfolio-overlay">
+        <h3>E-commerce Platform</h3>
+        <p>Complete UI/UX redesign</p>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80" alt="Banking App">
+      <div class="portfolio-overlay">
+        <h3>Banking App</h3>
+        <p>Mobile banking design</p>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Dashboard">
+      <div class="portfolio-overlay">
+        <h3>Dashboard</h3>
+        <p>Enterprise dashboard</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="process-header">
+    <h2>Our Design Process</h2>
+  </div>
+  <div class="process-timeline">
+    <div class="process-step">
+      <div class="step-content">
+        <div class="step-number">01</div>
+        <h3>Research</h3>
+        <p>Understand users, business goals, and market context</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-content">
+        <div class="step-number">02</div>
+        <h3>Ideate</h3>
+        <p>Brainstorm solutions and create initial concepts</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-content">
+        <div class="step-number">03</div>
+        <h3>Design</h3>
+        <p>Create wireframes, mockups, and high-fidelity designs</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-content">
+        <div class="step-number">04</div>
+        <h3>Prototype</h3>
+        <p>Build interactive prototypes for testing</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-content">
+        <div class="step-number">05</div>
+        <h3>Test & Iterate</h3>
+        <p>Validate with users and refine based on feedback</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="testimonials-header">
+    <h2>Client Testimonials</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">DesignCraft transformed our app's user experience. The new design is not only beautiful but also incredibly intuitive. User engagement increased by 50%!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background-image:url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80);"></div>
+        <div class="author-info">
+          <h4>Rajesh Kumar</h4>
+          <p>Product Manager, TechStart</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">Working with DesignCraft was a pleasure. They understood our brand vision and created a design system that perfectly represents our company.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background-image:url(https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80);"></div>
+        <div class="author-info">
+          <h4>Priya Sharma</h4>
+          <p>Founder, Creative Agency</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <h2>Ready to Transform<br>Your Design?</h2>
+  <p>Let's create something beautiful together. Get a free consultation today.</p>
+  <a class="btn-primary" href="mailto:hello@designcraft.in" style="background:white; color:#8b5cf6; font-size:16px; padding:18px 40px;">Start Your Project</a>
+</section>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>DesignCraft</h4>
+      <p>UI/UX design studio creating beautiful, user-centered experiences that drive engagement and conversions.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Services</h4>
+      <a href="#services">UI Design</a>
+      <a href="#services">UX Design</a>
+      <a href="#services">Brand Identity</a>
+      <a href="#services">Prototyping</a>
+    </div>
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <p>📞 +91 1800-XXX-XXXX</p>
+      <p>✉️ hello@designcraft.in</p>
+      <p>📍 Pune, Maharashtra</p>
+    </div>
+    <div class="footer-section">
+      <h4>Hours</h4>
+      <p>Mon-Fri: 9 AM - 7 PM</p>
+      <p>Sat: 10 AM - 4 PM</p>
+      <p>Support: 24/7</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 DesignCraft. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const toggle=document.getElementById('mobileMenuToggle');
+  const nav=document.getElementById('navLinks');
+  if(toggle && nav){
+    toggle.addEventListener('click',()=>{toggle.classList.toggle('active');nav.classList.toggle('active');});
+    nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{toggle.classList.remove('active');nav.classList.remove('active');}));
+  }
+});
+</script>
+</body>
+</html>
